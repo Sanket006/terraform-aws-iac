@@ -24,7 +24,6 @@ resource "aws_instance" "web" {
     inline = [
       "sudo apt update -y",
       "sudo apt install apache2 -y",
-      # "sudo sed -i \"s/\\${hostname}/$(hostname)/g\" /home/ubuntu/index.html", # Optional: To replace a placeholder in index.html with the actual hostname
       "sudo mv /home/ubuntu/index.html /var/www/html/index.html",
       "sudo systemctl restart apache2"
     ]
