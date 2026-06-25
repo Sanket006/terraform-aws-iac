@@ -2,7 +2,7 @@
 resource "aws_security_group" "my_sg" {
   name        = var.sg_name
   description = var.sg_description
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = var.vpc_id
 
 # Inbound rules
   ingress {

@@ -42,3 +42,22 @@ variable "default_action_type" {
   default = "forward"
 }
 
+variable "vpc_id" {
+  type        = string
+  description = "VPC ID where ALB and target group will be created"
+}
+
+variable "security_groups" {
+  type        = list(string)
+  description = "List of security groups to associate with the ALB"
+}
+
+variable "subnets" {
+  type        = list(string)
+  description = "List of subnets to launch the ALB in"
+}
+
+variable "target_id" {
+  type        = string
+  description = "Target ID (EC2 instance) to attach to the target group"
+}

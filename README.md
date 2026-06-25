@@ -66,12 +66,12 @@ terraform-aws-iac/
 │   │   └── prod.tfvars              # t3.small
 │   └── terraform-workspace.md       # Terraform Workspaces guide
 │
-├── Terraform_Provisiner/            # All 3 provisioner types + complete example
+├── Terraform_Provisioner/           # All 3 provisioner types + complete example
 │   ├── local_exec/                  # local-exec: print/write EC2 IP locally
 │   ├── remote_exec/                 # remote-exec: SSH + install Apache2 inline
 │   ├── file/                        # file: upload index.html to EC2 via SSH
-│   │   └── chirsmas_piano_template/ # Full HTML/CSS/JS website deployed via file provisioner
-│   └── complete_example_of_all_provisiners/  # file + remote-exec + local-exec combined
+│   │   └── christmas_piano_template/ # Full HTML/CSS/JS website deployed via file provisioner
+│   └── complete_example_of_all_provisioners/  # file + remote-exec + local-exec combined
 │
 ├── Terraform_Remote_Backend/        # S3 remote state + DynamoDB locking
 │   ├── backend/
@@ -84,7 +84,7 @@ terraform-aws-iac/
     ├── alb/                         # ALB + EC2 only
     ├── alb+asg/                     # ALB + Auto Scaling Group
     ├── alb+multi-pages/             # ALB + path routing to 3 EC2s (home/products/cart)
-    ├── alb+multi-page+mutli-instance/  # ALB + path routing + 2 instances per page
+    ├── alb+multi-page+multi-instance/  # ALB + path routing + 2 instances per page
     ├── alb+one-asg+multi-page+multi-instance/  # ALB + single ASG serving all pages
     └── alb+separate-asg+multi-page+multi-ec2-instance/  # ALB + dedicated ASG per page
 ```
@@ -216,7 +216,7 @@ Each workspace maintains its own state file. Workspace name exposed via `terrafo
 
 ---
 
-### 5️⃣ Provisioners (`Terraform_Provisiner/`)
+### 5️⃣ Provisioners (`Terraform_Provisioner/`)
 
 All three Terraform provisioner types — each in its own folder, plus a complete combined example.
 
@@ -262,14 +262,14 @@ provisioner "file" {
 }
 # Upload a directory:
 # provisioner "file" {
-#   source      = "chirsmas_piano_template/"
+#   source      = "christmas_piano_template/"
 #   destination = "/home/ubuntu"
 # }
 ```
 
-Includes a full **Christmas Piano HTML/CSS/JS website** (`chirsmas_piano_template/`) that can be deployed to an EC2 Apache instance using the file provisioner.
+Includes a full **Christmas Piano HTML/CSS/JS website** (`christmas_piano_template/`) that can be deployed to an EC2 Apache instance using the file provisioner.
 
-#### `complete_example_of_all_provisiners/` — all three combined
+#### `complete_example_of_all_provisioners/` — all three combined
 
 Runs on EC2 (`t3.micro`, `ap-south-1`, key `ajaymumbaikey`):
 1. `file` provisioner → uploads `index.html` to `/home/ubuntu/`
@@ -392,8 +392,8 @@ terraform apply
 | Issue | Location | Fix |
 |---|---|---|
 | Hardcoded DB password `redhat@123` | `Terraform-modules/modules/rds/variable.tf`, `AWS_resources_tf_files/rds/variable.tf` | Pass via `TF_VAR_password` env variable or AWS Secrets Manager |
-| Hardcoded SSH key path (`C:/Users/Lenovo/Downloads/...`) | `Terraform_Provisiner/` `main.tf` files | Replace with `~/your-key.pem` or a variable |
-| Hardcoded security group ID in provisioner variables | `Terraform_Provisiner/*/variable.tf` | Use `aws_security_group` resource reference instead |
+| Hardcoded SSH key path (`C:/Users/Lenovo/Downloads/...`) | `Terraform_Provisioner/` `main.tf` files | Replace with `~/your-key.pem` or a variable |
+| Hardcoded security group ID in provisioner variables | `Terraform_Provisioner/*/variable.tf` | Use `aws_security_group` resource reference instead |
 | No DynamoDB state locking in remote backend | `Terraform_Remote_Backend/main.tf` | Add `dynamodb_table` to backend config for team safety |
 | RDS `publicly_accessible = false` ✅ | `rds/main.tf` | Already correctly set — good practice |
 
@@ -405,17 +405,17 @@ terraform apply
 |---|---|
 | Provider + resource blocks | `AWS_resources_tf_files/` (all folders) |
 | Variables, outputs, locals | Every folder |
-| `count` meta-argument | `Using_Default_VPC/alb+multi-page+mutli-instance/` |
+| `count` meta-argument | `Using_Default_VPC/alb+multi-page+multi-instance/` |
 | `for_each` over a map | `Terraform_Loops/main.tf` |
 | `for` expression in output | `Terraform_Loops/output.tf` |
 | Dynamic resource naming | `Terraform-modules/modules/eks/main.tf` |
 | Reusable modules | `Terraform-modules/modules/` |
 | Multi-env with tfvars | `Terraform_Multi_Env/env/` |
 | Terraform Workspaces | `Terraform_Multi_Env/terraform-workspace.md` |
-| `local-exec` provisioner | `Terraform_Provisiner/local_exec/` |
-| `remote-exec` provisioner | `Terraform_Provisiner/remote_exec/` |
-| `file` provisioner | `Terraform_Provisiner/file/` |
-| All 3 provisioners combined | `Terraform_Provisiner/complete_example_of_all_provisiners/` |
+| `local-exec` provisioner | `Terraform_Provisioner/local_exec/` |
+| `remote-exec` provisioner | `Terraform_Provisioner/remote_exec/` |
+| `file` provisioner | `Terraform_Provisioner/file/` |
+| All 3 provisioners combined | `Terraform_Provisioner/complete_example_of_all_provisioners/` |
 | S3 remote state backend | `Terraform_Remote_Backend/` |
 | DynamoDB state locking | `Terraform_Remote_Backend/Terraform_Remote_Backend-for-multi-env.md` |
 | ALB + EC2 | `Using_Default_VPC/alb/` |

@@ -1,5 +1,5 @@
 variable "ami" {
-  default = "ami-0c55b159cbfafe1f0" # Example AMI ID for Ubuntu in us-east-1
+  default = "ami-0cda377a1b884a1bc" # Ubuntu 22.04 LTS in ap-south-1 (Mumbai)
 }
 
 variable "instance_type" {
@@ -23,4 +23,14 @@ variable "user_data_script" {
 
 variable "env" {
   default = "dev"
+}
+
+variable "vpc_security_group_ids" {
+  type        = list(string)
+  description = "List of security group IDs to associate with EC2"
+}
+
+variable "subnet_id" {
+  type        = string
+  description = "Subnet ID where EC2 will be launched"
 }

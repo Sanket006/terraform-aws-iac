@@ -1,10 +1,7 @@
 # RDS Subnet Group
 resource "aws_db_subnet_group" "db_subnet_group" {
   name       = var.db_subnet_group_name
-  subnet_ids = [
-    aws_subnet.private_a.id,
-    aws_subnet.private_b.id
-  ]
+  subnet_ids = var.subnet_ids
 
   tags = {
     Name = "${var.project}-db-subnet-group"
@@ -15,7 +12,7 @@ resource "aws_db_subnet_group" "db_subnet_group" {
 resource "aws_security_group" "rds_sg" {
   name        = var.rds_sg_name
   description = var.description
-  vpc_id      = aws_vpc.my-vpc.id
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port   = 3306

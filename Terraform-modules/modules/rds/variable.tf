@@ -58,3 +58,12 @@ variable "parameter_group_name" {
   default = "default.mysql8.0"
 }
 
+variable "vpc_id" {
+  type        = string
+  description = "VPC ID where the RDS security group will be created"
+}
+
+variable "subnet_ids" {
+  type        = list(string)
+  description = "List of private subnet IDs for the RDS subnet group"
+}

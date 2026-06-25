@@ -5,7 +5,7 @@ resource "aws_launch_template" "asg_lt" {
   instance_type = var.instance_type
   key_name      = var.key_name
   
-  vpc_security_group_ids = [aws_security_group.my_sg.id]
+  vpc_security_group_ids = var.vpc_security_group_ids
 
   user_data = var.user_data_script
 
@@ -25,7 +25,8 @@ resource "aws_autoscaling_group" "my_asg" {
   desired_capacity     = var.desired_capacity
   max_size             = var.max_size
   min_size             = var.min_size
-  vpc_zone_identifier  = [aws_subnet.public_subnet.id]
+  vpc_zone_identifier  = var.subnets
+  target_group_arns    = var.target_group_arns
   
   launch_template {
     id      = aws_launch_template.asg_lt.id

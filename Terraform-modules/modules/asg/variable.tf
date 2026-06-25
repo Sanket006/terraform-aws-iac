@@ -3,7 +3,7 @@ variable "launch_template_name" {
 }
 
 variable "ami_id" {
-  default = "ami-0c55b159cbfafe1f0" # Example AMI ID, replace with your desired AMI
+  default = "ami-0cda377a1b884a1bc" # Ubuntu 22.04 LTS in ap-south-1
 }
 
 variable "instance_type" {
@@ -11,7 +11,7 @@ variable "instance_type" {
 }
 
 variable "key_name" {
-  default = "my-key-pair" # Replace with your key pair name
+  default = "my-key-pair"
 }
 
 variable "user_data_script" {
@@ -55,4 +55,20 @@ variable "predefined_metric_type" {
 
 variable "target_value" {
   default = 50.0
+}
+
+variable "vpc_security_group_ids" {
+  type        = list(string)
+  description = "List of security group IDs to associate with the launch template"
+}
+
+variable "subnets" {
+  type        = list(string)
+  description = "List of subnets to associate with the Auto Scaling Group"
+}
+
+variable "target_group_arns" {
+  type        = list(string)
+  description = "List of target group ARNs to associate with the Auto Scaling Group"
+  default     = []
 }
